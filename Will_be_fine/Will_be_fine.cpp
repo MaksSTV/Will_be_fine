@@ -29,6 +29,7 @@ void In_txt(ifstream& f, ifstream& f2, ofstream& f_out) {
 void Input_List(ifstream& f, Form_L1 &list1, int &last) {
     char s = 'a';
     int i = 0;
+    last = 0;
     list1.head = new L1;
     list1.cur = list1.head;
     list1.cur->elem.head = new list;
@@ -67,7 +68,16 @@ void Input_List(ifstream& f, Form_L1 &list1, int &last) {
     f.close();
     list1.cur = list1.head;
     list1.cur->elem.cur = list1.cur->elem.head;
-    f.open("in.txt");
+    cout << "Which file open?\n";
+    int a;
+    cin >> a;
+    if (a == 1) {
+        f.open("in.txt");
+    }
+    else {
+        f.open("in2.txt");
+    }
+    
     while (list1.cur->next != NULL) {
         i = 0;
         while (list1.cur->elem.cur->next != NULL) {
@@ -111,10 +121,10 @@ void Input_List(ifstream& f, Form_L1 &list1, int &last) {
         }
         
     }
-    if (f.eof()) {
+   /* if (f.eof()) {
        // list1.cur->elem.cur->s[i] = list1.mark;
         cout << last;
-    }
+    }*/
 }
 void Out(ofstream& f_out, Form_L1& list1, int &last) {
     list1.cur = list1.head;
@@ -150,19 +160,19 @@ void Out(ofstream& f_out, Form_L1& list1, int &last) {
         list1.cur->elem.cur = list1.cur->elem.head;
     }
     while (last!=0) {
-        int last1 = 0;
+        //int last1 = 0;
         i = 0;
         int flag = 0;
         while (list1.cur->elem.cur->next != NULL) {
             f_out << list1.cur->elem.cur->s[i];
             i++;
             last--;
-            last1++;
+          //  last1++;
             if (i == N) {
                 i = 0;
                 list1.cur->elem.cur = list1.cur->elem.cur->next;
                 if (list1.cur->elem.cur->s[i] == list1.mark) {
-                    f_out << "-------->x";
+                    f_out << "-------->x\n";
                     flag = -1;
                     break;
 
@@ -184,19 +194,22 @@ void Out(ofstream& f_out, Form_L1& list1, int &last) {
 
             while (list1.cur->elem.cur->s[i] != list1.mark) {
                 i++;
-                last1++;
+                //last1++;
                 last--;
                 if (last == 0) {
-                    f_out << "-------->x";
+                    f_out << "-------->x\n";
 
                     break;
                 }
                 f_out << list1.cur->elem.cur->s[i];
             }
-            cout << last1 << last;
+            //cout << last1 << last;
 
         }
     }
+}
+void Check() {
+
 }
 int main()
 {
@@ -208,6 +221,8 @@ int main()
     In_txt(f, f2, f_out);
     Input_List(f, list1,last);
     Out(f_out, list1,last);
+    Input_List(f2, list2, last);
+    Out(f_out, list2, last);
     system("pause");
     return 0;
 }
