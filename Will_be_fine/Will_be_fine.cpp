@@ -51,7 +51,7 @@ void Input_List(ifstream& f, Form_L1 &list1, int &last) {
             list1.cur->elem.cur = list1.cur->elem.head;
             i = 0;
         }
-        if  ((i == N)&&(!f.eof())) {
+        if  ((i == N)) {
             list1.cur->elem.cur->next = new list;
             list1.cur->elem.cur = list1.cur->elem.cur->next;
             i = 0;
@@ -87,7 +87,6 @@ void Input_List(ifstream& f, Form_L1 &list1, int &last) {
         list1.cur = list1.cur->next;
         list1.cur->elem.cur = list1.cur->elem.head;
     }
-    //int last = 0;
     while (!f.eof()) {
         i = 0;
         while (list1.cur->elem.cur->next != NULL) {
@@ -101,7 +100,11 @@ void Input_List(ifstream& f, Form_L1 &list1, int &last) {
         }
         i = 0;
         f >> list1.cur->elem.cur->s[i];
-        while (!f.eof()) {
+        while (true) {
+            if (f.eof()) {
+                list1.cur->elem.cur->s[i] = list1.mark;
+                break;
+            }
             i++;
             last++;
             f >> list1.cur->elem.cur->s[i];
@@ -124,8 +127,13 @@ void Out(ofstream& f_out, Form_L1& list1, int &last) {
             i++;
             if (i == N) {
                 i = 0;
-                f_out << "->";
                 list1.cur->elem.cur = list1.cur->elem.cur->next;
+                if (list1.cur->elem.cur->s[i] == '\n') {
+                    f_out << "-------->";
+                }
+                else {
+                    f_out << "->";
+                }
             }
         }
         i = 0;
@@ -144,32 +152,51 @@ void Out(ofstream& f_out, Form_L1& list1, int &last) {
     while (last!=0) {
         int last1 = 0;
         i = 0;
+        int flag = 0;
         while (list1.cur->elem.cur->next != NULL) {
             f_out << list1.cur->elem.cur->s[i];
             i++;
             last--;
             last1++;
             if (i == N) {
-                f_out << "->";
                 i = 0;
                 list1.cur->elem.cur = list1.cur->elem.cur->next;
+                if (list1.cur->elem.cur->s[i] == list1.mark) {
+                    f_out << "-------->x";
+                    flag = -1;
+                    break;
+
+                }
+                else {
+                    f_out << "->";
+                }
             }
         }
-        i = 0;
-        f_out << list1.cur->elem.cur->s[i];
-        while (last!=0) {
-            i++;
-            last1++;
-            last--;
-            if (last==0) {
+        if (flag != -1) {
+            i = 0;
+            /*if (list1.cur->elem.cur->s[i] == list1.mark) {
                 f_out << "-------->x";
                 break;
-            }
+            }*/
+
             f_out << list1.cur->elem.cur->s[i];
+
+
+            while (list1.cur->elem.cur->s[i] != list1.mark) {
+                i++;
+                last1++;
+                last--;
+                if (last == 0) {
+                    f_out << "-------->x";
+
+                    break;
+                }
+                f_out << list1.cur->elem.cur->s[i];
+            }
+            cout << last1 << last;
+
         }
-        cout << last1<<last;
     }
-    
 }
 int main()
 {
