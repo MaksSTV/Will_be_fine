@@ -139,12 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="In.cpp" />
+    <ClCompile Include="Methodcpp.cpp" />
+    <ClCompile Include="Out.cpp" />
+    <ClCompile Include="Process.cpp" />
     <ClCompile Include="Will_be_fine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="in.txt" />
     <Text Include="in2.txt" />
+    <Text Include="in3.txt" />
     <Text Include="out.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Def.h" />
+    <ClInclude Include="Method.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
